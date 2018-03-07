@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" >
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://localhost:3306/bpmn30"/>
+        <property name="username" value="root" />
+        <property name="password" value="123456" />
+        <property name="defaultAutoCommit" value="false" />
+    </bean>
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+    <!--<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">-->
+        <!--<property name="dataSource" ref="dataSource"/>-->
+        <!--<property name="hibernateProperties">-->
+            <!--<props>-->
+                <!--<prop key="hibernate.dialect">-->
+                    <!--org.hibernate.dialect.MySQL5Dialect-->
+                <!--</prop>-->
+                <!--<prop key="hibernate.show_sql">true</prop>-->
+            <!--</props>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <bean id="homeAction" class="com.example.action.HomeAction"/>
+    <bean id="welcomeAction" class="com.example.action.WelcomeAction"/>
+    <bean id="processAction" class="com.example.action.ProcessAction">
+        <property name="taskService" ref="taskService" />
+    </bean>
+    <bean id="leaveAction" class="com.example.action.LeaveAction">
+        <property name="repositoryService" ref="repositoryService" />
+        <property name="identityService" ref="identityService" />
+        <property name="formService" ref="formService" />
+    </bean>
+    <bean id="leaveListAction" class="com.example.action.LeaveListAction">
+        <property name="taskService" ref="taskService" />
+    </bean>
+    <bean id="reapplyAction" class="com.example.action.ReapplyAction">
+        <property name="formService" ref="formService" />
+        <property name="taskService" ref="taskService" />
+    </bean>
+    <bean id="deptLeaderAction" class="com.example.action.DeptLeaderAction">
+        <property name="taskService" ref="taskService" />
+    </bean>
+    <bean id="deptLeaderAuditAction" class="com.example.action.DeptLeaderAuditAction">
+        <property name="taskService" ref="taskService" />
+        <property name="formService" ref="formService" />
+    </bean>
+    <bean id="leaveNewAction" class="com.example.action.LeaveNewAction"/>
+    <bean id="userAction" class="com.example.action.UserAction">
+        <property name="identityService" ref="identityService" />
+    </bean>
+    <bean id="processEngineConfiguration"
+          class="org.activiti.spring.SpringProcessEngineConfiguration">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="transactionManager" ref="transactionManager"/>
+        <property name="databaseSchemaUpdate" value="true" />
+        <!--<property name="deploymentResources" value="classpath*:/leave.bpmn"/>-->
+        <property name="beans">
+            <map>
+                <!--<entry key="myBean" value-ref="myBean"/>-->
+            </map>
+        </property>
+        <property name="customFormTypes">
+            <list>
+                <bean class="com.example.activiti.form.JavascriptFormType"/>
+            </list>
+        </property>
+    </bean>
+    <bean id="processEngineFactory" class="org.activiti.spring.ProcessEngineFactoryBean">
+        <property name="processEngineConfiguration" ref="processEngineConfiguration"/>
+    </bean>
+    <bean id="repositoryService" factory-bean="processEngineFactory" factory-method="getRepositoryService"/>
+    <bean id="runtimeService" factory-bean="processEngineFactory" factory-method="getRuntimeService"/>
+    <bean id="formService" factory-bean="processEngineFactory" factory-method="getFormService"/>
+    <bean id="identityService" factory-bean="processEngineFactory" factory-method="getIdentityService"/>
+    <bean id="taskService" factory-bean="processEngineFactory" factory-method="getTaskService"/>
+    <bean id="historyService" factory-bean="processEngineFactory" factory-method="getHistoryService"/>
+    <bean id="managementService" factory-bean="processEngineFactory" factory-method="getManagementService"/>
+</beans>

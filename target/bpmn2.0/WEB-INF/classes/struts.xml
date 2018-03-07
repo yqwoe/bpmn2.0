@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <include file="struts-default.xml"></include>
+    <package name="struts2" namespace="/" extends="struts-default">
+        <action name="homepage" class="homeAction">
+            <result name="success">/pages/index.jsp</result>
+            <result name="error">/pages/sessions/new.jsp</result>
+        </action>
+        <action name="signIn" class="userAction">
+            <result name="success">/pages/index.jsp</result>
+            <result name="error">/pages/sessions/new.jsp</result>
+        </action>
+        <action name="welcome" class="welcomeAction">
+            <result name="success">/pages/welcome.jsp</result>
+        </action>
+        <action name="process" class="processAction">
+            <result name="success">/pages/process.jsp</result>
+        </action>
+        <action name="leave" class="leaveAction">
+            <result name="success">/pages/leave/index.jsp</result>
+            <result name="error">/pages/leave/new.jsp</result>
+        </action>
+        <action name="leave_new" class="leaveNewAction">
+            <result name="success">/pages/leave/new.jsp</result>
+        </action>
+        <action name="leaveList" class="leaveListAction">
+            <result name="success">/pages/leave/index.jsp</result>
+        </action>
+        <action name="dept" class="deptLeaderAction">
+            <result name="success">/pages/dept/index.jsp</result>
+        </action>
+        <action name="deptAudit" class="deptLeaderAuditAction">
+            <result name="success" type="redirectAction">/leaveList</result>
+        </action>
+        <action name="reapply" class="reapplyAction">
+            <result name="success" type="redirectAction">/leaveList</result>
+        </action>
+    </package>
+</struts>
