@@ -5,9 +5,11 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.task.Task;
+import org.activiti.engine.task.TaskQuery;
 import org.apache.log4j.Logger;
 
 import java.util.List;
+import java.util.Map;
 
 public class ProcessAction extends ActionSupport {
     private static final long serialVersionUID = 1L;
@@ -51,7 +53,13 @@ public class ProcessAction extends ActionSupport {
     public String execute(){
         System.out.printf("process execute");
         User user = (User) ActionContext.getContext().getSession().get("user");
-        tasks = taskService.createTaskQuery().taskDefinitionKey("modifyApply").list();
+        String groupId = user.getGroupId();
+        TaskQuery taskQuery = taskService.createTaskQuery();
+        if("user".equals(groupId))
+            taskQuery = taskQuery.taskAssignee(user.getName()).taskDefinitionKey("modifyApply");
+        else
+            taskQuery = taskQuery.taskCandidateGroup(groupId);
+        tasks = taskQuery.list();
         for(Task task : tasks){
             System.out.println("taskName:"+task.getName()+"----------taskGroup:"+task.getCreateTime());
         }

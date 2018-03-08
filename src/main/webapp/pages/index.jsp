@@ -48,7 +48,7 @@
                 <ul class="am-dropdown-content">
                     <li><a href="#"><span class="am-icon-user"></span> 资料</a></li>
                     <li><a href="#"><span class="am-icon-cog"></span> 设置</a></li>
-                    <li><a href="#"><span class="am-icon-power-off"></span> 退出</a></li>
+                    <li><a href="signOut"><span class="am-icon-power-off"></span> 退出</a></li>
                 </ul>
             </li>
             <li class="am-hide-sm-only"><a href="javascript:;" id="admin-fullscreen"><span class="am-icon-arrows-alt"></span> <span class="admin-fullText">开启全屏</span></a></li>
@@ -64,8 +64,7 @@
                 <li><a href="process" target="mainIframe"><span class="am-icon-home"></span> 待办事项</a></li>
                 <li><a href="leaveList" target="mainIframe"><span class="am-icon-home"></span> 请假列表</a></li>
                 <li><a href="leave_new" target="mainIframe"><span class="am-icon-home"></span> 请假申请</a></li>
-                <li><a href="dept?reuquestType=1" target="mainIframe"><span class="am-icon-table"></span> 总经理审批</a></li>
-                <li><a href="dept?reuquestType=2" target="mainIframe"><span class="am-icon-pencil-square-o"></span> 人事审批</a></li>
+                <li><a href="deploy" target="mainIframe"><span class="am-icon-home"></span> 流程管理</a></li>
             </ul>
 
             <div class="am-panel am-panel-default admin-sidebar-panel">
@@ -87,7 +86,7 @@
 
     <!-- content start -->
     <div class="admin-content">
-        <div class="admin-content-body">
+        <div class="admin-content-body" style="width:100%;height: 300%">
             <%--<div class="am-cf am-padding">--%>
                 <%--<div class="am-fl am-cf"><strong class="am-text-primary am-text-lg">首页</strong> / <small>一些常用模块</small></div>--%>
             <%--</div>--%>
@@ -328,7 +327,7 @@
                 <%--</div>--%>
             <%--</div>--%>
 
-                <iframe id="mainIframe" name="mainIframe" src="welcome" class="module-iframe" scrolling="auto" frameborder="0" style="width:100%;height: 600px"></iframe>
+                <iframe id="mainIframe" name="mainIframe" src="welcome" class="module-iframe" scrolling="auto" frameborder="0" style="width:100%;height: 100%"></iframe>
         </div>
 
         <footer class="admin-content-footer">

@@ -10,9 +10,12 @@
             <result name="success">/pages/index.jsp</result>
             <result name="error">/pages/sessions/new.jsp</result>
         </action>
-        <action name="signIn" class="userAction">
+        <action name="signIn" class="userAction" >
             <result name="success">/pages/index.jsp</result>
             <result name="error">/pages/sessions/new.jsp</result>
+        </action>
+        <action name="signOut" class="signOutAction">
+            <result name="success">/pages/sessions/new.jsp</result>
         </action>
         <action name="welcome" class="welcomeAction">
             <result name="success">/pages/welcome.jsp</result>
@@ -38,6 +41,11 @@
         </action>
         <action name="reapply" class="reapplyAction">
             <result name="success" type="redirectAction">/leaveList</result>
+        </action>
+        <action name="deploy" class="deployAction">
+            <result name="success">/pages/deploy/index.jsp</result>
+        </action>
+        <action name="read-image" class="resourceImageAction" >
         </action>
     </package>
 </struts>

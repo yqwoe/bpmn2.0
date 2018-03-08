@@ -4,7 +4,11 @@ import com.example.model.User;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import org.activiti.engine.IdentityService;
+import org.activiti.engine.identity.Group;
 import org.apache.log4j.Logger;
+import org.apache.struts2.ServletActionContext;
+
+import java.util.Map;
 
 
 public class UserAction extends ActionSupport {
@@ -39,11 +43,20 @@ public class UserAction extends ActionSupport {
         this.identityService = identityService;
     }
 
+
     public String execute(){
         System.out.printf("name:"+getName()+"-----------password:"+getPassword());
         ActionContext atx=ActionContext.getContext();
+        String method = ServletActionContext.getRequest().getMethod();
+        if("GET".equals(method))
+            return "error";
+
         if(identityService.checkPassword(getName(),getPassword())){
+
             User user = new User(getName(),getPassword());
+            //根绝用户id获取group
+            Group group = identityService.createGroupQuery().groupMember(user.getName()).singleResult();
+            user.setGroupId(group.getId());
             atx.getSession().put("user",user);
             return "success";
         }else{

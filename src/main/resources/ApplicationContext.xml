@@ -30,6 +30,10 @@
     <bean id="processAction" class="com.example.action.ProcessAction">
         <property name="taskService" ref="taskService" />
     </bean>
+    <bean id="deployAction" class="com.example.action.DeployAction">
+        <property name="repositoryService" ref="repositoryService" />
+        <property name="runtimeService" ref="runtimeService" />
+    </bean>
     <bean id="leaveAction" class="com.example.action.LeaveAction">
         <property name="repositoryService" ref="repositoryService" />
         <property name="identityService" ref="identityService" />
@@ -49,8 +53,17 @@
         <property name="taskService" ref="taskService" />
         <property name="formService" ref="formService" />
     </bean>
+    <bean id="resourceImageAction" class="com.example.action.ResourceImageAction">
+        <property name="repositoryService" ref="repositoryService" />
+        <property name="runtimeService" ref="runtimeService" />
+        <property name="historyService" ref="historyService" />
+        <property name="processEngine" ref="processEngine" />
+    </bean>
     <bean id="leaveNewAction" class="com.example.action.LeaveNewAction"/>
     <bean id="userAction" class="com.example.action.UserAction">
+        <property name="identityService" ref="identityService" />
+    </bean>
+    <bean id="signOutAction" class="com.example.action.SignOutAction">
         <property name="identityService" ref="identityService" />
     </bean>
     <bean id="processEngineConfiguration"
@@ -80,4 +93,5 @@
     <bean id="taskService" factory-bean="processEngineFactory" factory-method="getTaskService"/>
     <bean id="historyService" factory-bean="processEngineFactory" factory-method="getHistoryService"/>
     <bean id="managementService" factory-bean="processEngineFactory" factory-method="getManagementService"/>
+    <bean id="processEngine" factory-bean="processEngineConfiguration" factory-method="buildProcessEngine"/>
 </beans>

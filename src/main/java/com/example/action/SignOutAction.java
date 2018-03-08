@@ -4,16 +4,30 @@ import com.example.model.User;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import org.activiti.engine.IdentityService;
-import org.activiti.engine.identity.Group;
 import org.apache.log4j.Logger;
 
-import java.util.List;
-
-public class HomeAction extends ActionSupport {
+public class SignOutAction  extends ActionSupport {
     private static final long serialVersionUID = 1L;
     private Logger log = Logger.getLogger(this.getClass());
+    String name;
+    String password;
 
-    List<String> menus;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     IdentityService identityService;
 
     public IdentityService getIdentityService() {
@@ -24,21 +38,13 @@ public class HomeAction extends ActionSupport {
         this.identityService = identityService;
     }
 
-    public List<String> getMenus() {
-        return menus;
-    }
-
-    public void setMenus(List<String> menus) {
-        this.menus = menus;
-    }
-
     public String execute(){
+        System.out.printf("name:"+getName()+"-----------password:"+getPassword());
         ActionContext atx=ActionContext.getContext();
         User user = (User)atx.getSession().get("user");
-//        Group group = identityService.createGroupQuery().
-        if(user != null)
-            return "success";
-        else
-            return "error";
+        if(user != null){
+            atx.getSession().remove("user");
+        }
+        return "success";
     }
 }

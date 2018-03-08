@@ -1,5 +1,7 @@
 package com.example.action;
 
+import com.example.model.User;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import org.activiti.engine.FormService;
 import org.activiti.engine.TaskService;
@@ -60,15 +62,25 @@ public class DeptLeaderAuditAction extends ActionSupport {
         if(taskId != null){
 
             System.out.printf("approved"+approved);
+            User user = (User) ActionContext.getContext().getSession().get("user");
+            String groupId = user.getGroupId();
             TaskFormData taskFormData = formService.getTaskFormData(taskId);
             List<FormProperty> formProperties = taskFormData.getFormProperties();
             Map<String ,String> formValues = new HashMap<String, String>();
             for (FormProperty property : formProperties){
-                if(property.isWritable()){
+                if("user".equals(groupId) && property.getId().equals("reApply")){
                     formValues.put(property.getId(),approved);
+                } else if("deptLeader".equals(groupId) && property.getId().equals("deptLeaderApproved")){
+                    formValues.put(property.getId(),approved);
+                } else  if("hr".equals(groupId) && property.getId().equals("hrApproved")){
+                    formValues.put(property.getId(),approved);
+                } else if(property.isWritable()){
+                    formValues.put(property.getId(),property.getValue());
                 }
             }
-
+            for(Map.Entry<String,String> map : formValues.entrySet()){
+                System.out.println("key:"+map.getKey()+"--------value:"+map.getValue());
+            }
             formService.submitTaskFormData(taskId,formValues);
         }
         return "success";

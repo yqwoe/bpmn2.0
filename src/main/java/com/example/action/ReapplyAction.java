@@ -73,6 +73,7 @@ public class ReapplyAction extends ActionSupport {
                 formValues.put(property.getId(),property.getValue());
             }
         }
+
         formService.submitTaskFormData(taskId,formValues);
 
         return "success";

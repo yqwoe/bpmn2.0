@@ -45,10 +45,10 @@
             <td><s:property value="#task.processInstanceId" /></td>
             <td><s:property value="#task.createTime" /></td>
             <td>
-                <form action="reapply" method="post" id="form_<s:property value="#task.id" />">
+                <form action="deptAudit" method="post" id="form_<s:property value="#task.id" />">
                     <input type="hidden" name="taskId" value="<s:property value="#task.id" />"/>
-                    <button onclick="onOk('form_<s:property value="#task.id" />')" class="am-btn am-btn-default am-btn-xs" >重新提交</button>
-                    <button onclick="onCancel('form_<s:property value="#task.id" />')" class="am-btn am-btn-danger am-btn-xs">取消申请</button>
+                    <button onclick="onOk('form_<s:property value="#task.id" />')" class="am-btn am-btn-default am-btn-xs" >同意</button>
+                    <button onclick="onCancel('form_<s:property value="#task.id" />')" class="am-btn am-btn-danger am-btn-xs">拒绝</button>
                 </form>
             </td>
         </tr>
